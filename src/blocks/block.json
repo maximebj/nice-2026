@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "nice-2026/alert",
+  "version": "1.0",
+  "title": "Bloc Gutenberg",
+  "category": "text",
+  "icon": "bell",
+  "description": "Un bloc d’alerte avec plusieurs styles.",
+  "keywords": ["attention", "alerte", "conseil", "éviter", "succès"],
+  "attributes": {
+    "content": {
+      "type": "string",
+      "source": "html",
+      "selector": "p",
+      "role": "content"
+    },
+    "type": {
+      "type": "string",
+      "default": "advice"
+    }
+  },
+  "example": {
+    "attributes": {
+      "content": "Un bloc d’alerte avec plusieurs styles.",
+      "type": "warning"
+    }
+  },
+  "textdomain": "nice-2026",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}

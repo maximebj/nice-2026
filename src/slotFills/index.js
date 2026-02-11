@@ -6,6 +6,8 @@ import { ColorPalette, PanelBody, TextControl, ToggleControl, __experimentalVSta
 import { starFilled } from '@wordpress/icons';
 import { useState } from '@wordpress/element';
 
+import './style.scss';
+
 function PluginWcNicePanel() {
   const [name, setName] = useState('Conférence Nice 2026');
   const [color, setColor] = useState('#000000');

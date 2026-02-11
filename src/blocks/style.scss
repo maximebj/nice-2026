@@ -1,0 +1,30 @@
+.wp-block-nice-2026-alert {
+  padding: var(--wp--preset--spacing--30);
+  color: var(--wp--preset--color--white);
+  border-left: 5px solid;
+  border-radius: 4px;
+
+  p {
+    margin: 0;
+  }
+
+  &.is-type-advice {
+    background: #83bd71;
+    border-color: color-mix(in srgb, #83bd71 85%, black);
+  }
+
+  &.is-type-warning {
+    background: #ffc334;
+    border-color: color-mix(in srgb, #ffc334 85%, black);
+  }
+
+  &.is-type-avoid {
+    background: #ff2952;
+    border-color: color-mix(in srgb, #ff2952 85%, black);
+  }
+
+  &.is-type-info {
+    background: #48add8;
+    border-color: color-mix(in srgb, #48add8 85%, black);
+  }
+}
