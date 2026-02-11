@@ -1,21 +1,17 @@
-// Les imports de composants WordPress
 import { __ } from '@wordpress/i18n';
 import { registerPlugin } from '@wordpress/plugins';
 import { PluginSidebar, } from '@wordpress/editor';
 import { useSettings } from '@wordpress/block-editor';
 import { ColorPalette, PanelBody, TextControl, ToggleControl, __experimentalVStack as VStack } from '@wordpress/components';
 import { starFilled } from '@wordpress/icons';
-
 import { useState } from '@wordpress/element';
 
-// Ce composant utilise <PluginSidebar> pour afficher un panneau latéral dans l'éditeur de blocs.
 function PluginWcNicePanel() {
   const [name, setName] = useState('Conférence Nice 2026');
   const [color, setColor] = useState('#000000');
   const [isLive, setIsLive] = useState(true);
 
-  // Récupérer les couleurs du thème
-  const [themeColors] = useSettings("color.palette.theme");
+  const [themeColors] = useSettings("color.palette.theme"); // Récupérer les couleurs du thème
 
   return (
     <PluginSidebar title={__("Bonjour Nice !", "nice-2026")} icon={starFilled}>
