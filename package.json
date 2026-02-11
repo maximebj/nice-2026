@@ -1,0 +1,20 @@
+{
+  "name": "conference-nice-2026",
+  "version": "1.0.0",
+  "description": "Plugin WordPress — Conférence Nice 2026",
+  "author": "",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "lint:js": "wp-scripts lint-js",
+    "lint:css": "wp-scripts lint-style",
+    "format": "wp-scripts format"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^30.0.0"
+  },
+  "dependencies": {
+    "@wordpress/icons": "^11.6.0"
+  }
+}
