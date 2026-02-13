@@ -21,8 +21,8 @@ import apiFetch from '@wordpress/api-fetch';
 
 import './styles.scss';
 
-// L'URL de notre route REST API custom
-const ENDPOINT = '/nice-2026/v1/settings';
+// L'URL de la route native /wp/v2/settings
+const ENDPOINT = '/wp/v2/settings';
 
 // Les réglages par défaut lorsqu'ils sont vides
 const DEFAULT_SETTINGS = {
@@ -67,14 +67,15 @@ function OptionsPage() {
     setSettings((prev) => ({ ...prev, [key]: value }));
   }, []);
 
-  // Chargement initial des options
+  // Chargement initial des options depuis la route native /wp/v2/settings
   useEffect(() => {
-    apiFetch({ path: ENDPOINT }) // La version WordPress de fetch
+    apiFetch({ path: ENDPOINT })
       .then((data) => {
+        // La route native retourne TOUS les réglages WP, on ne garde que les nôtres
         setSettings({
-          nice_2026_event_name: data.nice_2026_event_name || '',
-          nice_2026_event_day: data.nice_2026_event_day || 'jeudi',
-          nice_2026_event_color: data.nice_2026_event_color || '#0073aa',
+          nice_2026_event_name: data.nice_2026_event_name ?? '',
+          nice_2026_event_day: data.nice_2026_event_day ?? 'jeudi',
+          nice_2026_event_color: data.nice_2026_event_color ?? '#0073aa',
           nice_2026_event_confirmed: !!data.nice_2026_event_confirmed,
         });
       })

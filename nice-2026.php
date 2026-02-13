@@ -111,67 +111,36 @@ function nice_2026_enqueue_options_page_assets(string $hook_suffix): void
 add_action('admin_enqueue_scripts', 'nice_2026_enqueue_options_page_assets');
 
 
-# API REST — lecture / écriture des options
-function nice_2026_register_rest_routes(): void
+# Enregistrement des réglages via la Settings API native de WordPress.
+# Chaque option est exposée automatiquement sur GET/POST /wp/v2/settings.
+function nice_2026_register_settings(): void
 {
-	register_rest_route('nice-2026/v1', '/settings', [
-		[
-			'methods'             => WP_REST_Server::READABLE,
-			'callback'            => 'nice_2026_rest_get_settings',
-			'permission_callback' => function () {
-				return current_user_can('manage_options');
-			},
-		],
-		[
-			'methods'             => WP_REST_Server::EDITABLE,
-			'callback'            => 'nice_2026_rest_update_settings',
-			'permission_callback' => function () {
-				return current_user_can('manage_options');
-			},
-			'args'                => [
-				'nice_2026_event_name' => [
-					'type'              => 'string',
-					'sanitize_callback' => 'sanitize_text_field',
-				],
-				'nice_2026_event_day' => [
-					'type'              => 'string',
-					'sanitize_callback' => 'sanitize_text_field',
-				],
-				'nice_2026_event_color' => [
-					'type'              => 'string',
-					'sanitize_callback' => 'sanitize_hex_color',
-				],
-				'nice_2026_event_confirmed' => [
-					'type'              => 'boolean',
-					'sanitize_callback' => 'rest_sanitize_boolean',
-				],
-			],
-		],
+	register_setting('nice_2026_settings', 'nice_2026_event_name', [
+		'type'              => 'string',
+		'default'           => 'Conférence Nice 2026',
+		'sanitize_callback' => 'sanitize_text_field',
+		'show_in_rest'      => true,
+	]);
+
+	register_setting('nice_2026_settings', 'nice_2026_event_day', [
+		'type'              => 'string',
+		'default'           => 'jeudi',
+		'sanitize_callback' => 'sanitize_text_field',
+		'show_in_rest'      => true,
+	]);
+
+	register_setting('nice_2026_settings', 'nice_2026_event_color', [
+		'type'              => 'string',
+		'default'           => '#0073aa',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'show_in_rest'      => true,
+	]);
+
+	register_setting('nice_2026_settings', 'nice_2026_event_confirmed', [
+		'type'              => 'boolean',
+		'default'           => false,
+		'sanitize_callback' => 'rest_sanitize_boolean',
+		'show_in_rest'      => true,
 	]);
 }
-add_action('rest_api_init', 'nice_2026_register_rest_routes');
-
-# GET /wp-json/nice-2026/v1/settings
-function nice_2026_rest_get_settings(WP_REST_Request $request): WP_REST_Response
-{
-	return new WP_REST_Response([
-		'nice_2026_event_name'      => get_option('nice_2026_event_name', 'Conférence Nice 2026'),
-		'nice_2026_event_day'       => get_option('nice_2026_event_day', 'jeudi'),
-		'nice_2026_event_color'     => get_option('nice_2026_event_color', '#0073aa'),
-		'nice_2026_event_confirmed' => (bool) get_option('nice_2026_event_confirmed', false),
-	], 200);
-}
-
-# POST / PUT / PATCH /wp-json/nice-2026/v1/settings
-function nice_2026_rest_update_settings(WP_REST_Request $request): WP_REST_Response
-{
-	$allowed = ['nice_2026_event_name', 'nice_2026_event_day', 'nice_2026_event_color', 'nice_2026_event_confirmed'];
-
-	foreach ($allowed as $key) {
-		if ($request->has_param($key)) {
-			update_option($key, $request->get_param($key));
-		}
-	}
-
-	return nice_2026_rest_get_settings($request);
-}
+add_action('init', 'nice_2026_register_settings');
