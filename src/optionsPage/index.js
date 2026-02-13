@@ -21,8 +21,10 @@ import apiFetch from '@wordpress/api-fetch';
 
 import './styles.scss';
 
+// L'URL de notre route REST API custom
 const ENDPOINT = '/nice-2026/v1/settings';
 
+// Les réglages par défaut lorsqu'ils sont vides
 const DEFAULT_SETTINGS = {
   nice_2026_event_name: '',
   nice_2026_event_color: '#0073aa',
@@ -30,6 +32,7 @@ const DEFAULT_SETTINGS = {
   nice_2026_event_day: 'jeudi',
 };
 
+// Les couleurs de la palette (on n'a pas accès aux couleurs du thème hors éditeur)
 const COLORS = [
   { name: __('Bleu', 'nice-2026'), color: '#0073aa' },
   { name: __('Rouge', 'nice-2026'), color: '#cf2e2e' },
@@ -41,7 +44,7 @@ const COLORS = [
   { name: __('Noir', 'nice-2026'), color: '#1e1e1e' },
 ];
 
-// Montage de l'application React dans le conteneur PHP
+// Montage de l'application React dans le conteneur HTML généré en PHP
 domReady(() => {
   const root = createRoot(document.getElementById("nice-2026-options-page"));
   root.render(<OptionsPage />);
@@ -49,21 +52,24 @@ domReady(() => {
 
 // La page d'options
 function OptionsPage() {
-  const [settings, setSettings] = useState(DEFAULT_SETTINGS);
-  const [isSaving, setIsSaving] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [notice, setNotice] = useState(null);
 
+  // Les états permettent de conserver les données entre les rendus
+  const [settings, setSettings] = useState(DEFAULT_SETTINGS); // Les réglages
+  const [isSaving, setIsSaving] = useState(false); // État de sauvegarde
+  const [isLoading, setIsLoading] = useState(true); // État de chargement
+  const [notice, setNotice] = useState(null); // Message de notification
+
+  // Regardez dans la console
   console.log(settings);
 
-  // Met à jour une clé dans l'objet settings
+  // Mettre à jour une clé dans l'objet settings
   const updateSetting = useCallback((key, value) => {
     setSettings((prev) => ({ ...prev, [key]: value }));
   }, []);
 
   // Chargement initial des options
   useEffect(() => {
-    apiFetch({ path: ENDPOINT })
+    apiFetch({ path: ENDPOINT }) // La version WordPress de fetch
       .then((data) => {
         setSettings({
           nice_2026_event_name: data.nice_2026_event_name || '',
@@ -81,7 +87,7 @@ function OptionsPage() {
       .finally(() => setIsLoading(false));
   }, []);
 
-  // Sauvegarde
+  // Sauvegarde des données en base
   const handleSave = () => {
     setIsSaving(true);
     setNotice(null);
@@ -92,20 +98,15 @@ function OptionsPage() {
       data: settings,
     })
       .then(() => {
-        setNotice({
-          status: 'success',
-          message: __('Options enregistrées.', 'nice-2026'),
-        });
+        setNotice({ status: 'success', message: __('Options enregistrées.', 'nice-2026') });
       })
       .catch(() => {
-        setNotice({
-          status: 'error',
-          message: __('Erreur lors de l\'enregistrement.', 'nice-2026'),
-        });
+        setNotice({ status: 'error', message: __('Erreur lors de l\'enregistrement.', 'nice-2026') });
       })
       .finally(() => setIsSaving(false));
   };
 
+  // Si le chargement est en cours, afficher un spinner (mais c'est trop rapide pour le voir)
   if (isLoading) {
     return (
       <div className="nice-2026-options-page nice-2026-options-page--loading">
@@ -114,6 +115,7 @@ function OptionsPage() {
     );
   }
 
+  // Le rendu de la page d'options
   return (
     <VStack spacing={8} className="nice-2026-options-page">
       <Heading level={1}>
