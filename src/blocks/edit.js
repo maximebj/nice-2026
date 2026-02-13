@@ -1,8 +1,4 @@
-import {
-	BlockControls,
-	RichText,
-	useBlockProps,
-} from "@wordpress/block-editor";
+import { BlockControls, RichText, useBlockProps } from "@wordpress/block-editor";
 import { ToolbarButton, ToolbarGroup } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 
