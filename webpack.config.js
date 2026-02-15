@@ -5,6 +5,7 @@ const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 const scriptEntries = {
 	"slotFills/index": './src/slotFills/index.js', // Le script des SlotFills pour l'éditeur de blocs
 	"optionsPage/index": './src/optionsPage/index.js', // Le script de ma page d'options
+	"hooks/index": './src/hooks/index.js', // Le hook pour ajouter une taille aux boutons
 	// Je peux déclarer ici tous les autres scripts que je veux compiler
 };
 

@@ -1,0 +1,7 @@
+:root :where(.editor-styles-wrapper) .wp-block-button .has-size-small {
+  font-size: var(--wp--preset--font-size--small) !important;
+}
+
+:root :where(.editor-styles-wrapper) .wp-block-button .has-size-large {
+  font-size: var(--wp--preset--font-size--x-large) !important;
+}

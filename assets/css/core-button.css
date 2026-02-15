@@ -1,0 +1,11 @@
+:root
+  .wp-block-button.has-size-small
+  :where(.wp-element-button, .wp-block-button__link) {
+  font-size: var(--wp--preset--font-size--small);
+}
+
+:root
+  .wp-block-button.has-size-large
+  :where(.wp-element-button, .wp-block-button__link) {
+  font-size: var(--wp--preset--font-size--x-large);
+}
