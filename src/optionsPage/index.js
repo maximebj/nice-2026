@@ -21,9 +21,6 @@ import apiFetch from '@wordpress/api-fetch';
 
 import './styles.scss';
 
-// L'URL de la route native /wp/v2/settings
-const ENDPOINT = '/wp/v2/settings';
-
 // Les réglages par défaut lorsqu'ils sont vides
 const DEFAULT_SETTINGS = {
   nice_2026_event_name: '',
@@ -69,7 +66,7 @@ function OptionsPage() {
 
   // Chargement initial des options depuis la route native /wp/v2/settings
   useEffect(() => {
-    apiFetch({ path: ENDPOINT })
+    apiFetch({ path: '/wp/v2/settings' })
       .then((data) => {
         // La route native retourne TOUS les réglages WP, on ne garde que les nôtres
         setSettings({
@@ -88,13 +85,13 @@ function OptionsPage() {
       .finally(() => setIsLoading(false));
   }, []);
 
-  // Sauvegarde des données en base
+  // Sauvegarde des données en base sur la même route mais cette fois-ci en POST
   const handleSave = () => {
     setIsSaving(true);
     setNotice(null);
 
     apiFetch({
-      path: ENDPOINT,
+      path: '/wp/v2/settings',
       method: 'POST',
       data: settings,
     })
