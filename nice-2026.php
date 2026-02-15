@@ -24,3 +24,4 @@ require_once NICE_2026_PLUGIN_DIR . 'examples/slot-fills.php';
 require_once NICE_2026_PLUGIN_DIR . 'examples/hooks.php';
 require_once NICE_2026_PLUGIN_DIR . 'examples/blocks.php';
 require_once NICE_2026_PLUGIN_DIR . 'examples/options-page.php';
+require_once NICE_2026_PLUGIN_DIR . 'examples/data-views.php';
